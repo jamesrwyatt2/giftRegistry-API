@@ -6,7 +6,11 @@ import lombok.Data;
 public class ProductPayload {
 
     private Long id;
-    private String name;
+    private String url;
+    private String title;
     private String price;
     private String description;
+    private String image;
+    private String icon;
+
 }

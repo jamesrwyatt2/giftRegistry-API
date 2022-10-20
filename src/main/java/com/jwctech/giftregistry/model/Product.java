@@ -23,9 +23,18 @@ public class Product {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private String name;
+    private String url;
+    private String title;
     private String price;
+    @Column(length = 65555)
     private String description;
+    private String image;
+    private String icon;
+
+    private String medium;
+    private String brand;
+    private String category;
+
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "registry_id", nullable = false)

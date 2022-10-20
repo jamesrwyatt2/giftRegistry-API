@@ -4,7 +4,7 @@ import com.jwctech.giftregistry.payload.ProductPayload;
 
 public interface ProductService {
 
-    ProductPayload createProduct(Long id, ProductPayload productPayload);
+    ProductPayload createProduct(Long id, String productUrl);
 
     ProductPayload updateProduct(Long id, ProductPayload productPayload);
 

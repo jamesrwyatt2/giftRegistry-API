@@ -6,8 +6,10 @@ import com.jwctech.giftregistry.service.ProductService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-@RestController
+import java.util.HashMap;
 
+@RestController
+@CrossOrigin
 public class ProductController {
 
     private final ProductService productService;
@@ -21,9 +23,13 @@ public class ProductController {
 
     @PostMapping
     @RequestMapping("/registry/{id}/product")
-    public ResponseEntity createProduct(@PathVariable Long id, @RequestBody ProductPayload uiProduct){
-        return ResponseEntity.ok(productService.createProduct(id, uiProduct));
+    public ResponseEntity createProduct(@PathVariable Long id, @RequestBody HashMap<String,String> url){
+        System.out.println(url.get("url"));
+        return ResponseEntity.ok(productService.createProduct(id, url.get("url")));
     }
+
+
+
     // Get all Products for a Registry - Not in uses
     @GetMapping("/registry/{id}/product")
     public ResponseEntity getProductsForRegistry(){
