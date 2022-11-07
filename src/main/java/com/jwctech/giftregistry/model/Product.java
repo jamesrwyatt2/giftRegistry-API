@@ -28,13 +28,15 @@ public class Product {
     private String price;
     @Column(length = 65555)
     private String description;
+    @Column(length = 65555)
     private String image;
     private String icon;
 
     private String medium;
     private String brand;
     private String category;
-
+    @Column(length = 65555)
+    private String html;
 
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn(name = "registry_id", nullable = false)

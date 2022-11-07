@@ -11,11 +11,13 @@ import com.jwctech.giftregistry.service.RegistryService;
 import org.modelmapper.ModelMapper;
 import org.modelmapper.TypeMap;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 import javax.print.attribute.standard.Destination;
+import java.sql.SQLException;
 
 @Service
 public class ProductServiceImpl implements ProductService {
@@ -53,12 +55,23 @@ public class ProductServiceImpl implements ProductService {
         return null;
     }
 
+    @Override
+    public void deleteProduct(Long id) {
+        Product product = productRepo.findById(id).orElseThrow(() -> new ResourceNotFoundException("Product","id", id.toString()));
+        productRepo.delete(product);
+    }
+
     public Product getProductInfo(String productUrl){
 
         String url ="https://iframe.ly/api/iframely?url="+productUrl+"&api_key="+APIKEY;
         Product tempProduct;
         try{
             IFramelyResponse productResponse = this.restTemplate.getForObject(url, IFramelyResponse.class);
+            System.out.println(productResponse.toString());
+            if(productResponse.getError()!=null){
+                System.out.println("Exception Issue with call "+productResponse.getError());
+                throw new ResourceNotFoundException("Product", "URL", productUrl + " | "+ productResponse.getError());
+            }
             tempProduct = mapResponseToProduct(productResponse);
 
         } catch (HttpStatusCodeException ex) {
@@ -75,6 +88,8 @@ public class ProductServiceImpl implements ProductService {
             // System.out.println(headers.get("Server"));
 
             throw new ResourceNotFoundException("Product", "URL", productUrl);
+
+
         }
         return tempProduct;
     }
@@ -84,10 +99,16 @@ public class ProductServiceImpl implements ProductService {
         Product product = new Product();
         product.setUrl(productResponse.getUrl());
         product.setTitle(productResponse.getMeta().getTitle());
-        product.setDescription(productResponse.getMeta().getDescription());
+        try {
+            product.setDescription(productResponse.getMeta().getDescription());
+        } catch (Exception ex){
+
+        }
         product.setPrice(String.valueOf(productResponse.getMeta().getPrice()));
         product.setImage(productResponse.getLinks().getThumbnail().get(0).getHref());
         product.setIcon(productResponse.getLinks().getIcon().get(0).getHref());
+
+        product.setHtml(productResponse.getHtml());
 
         product.setMedium(productResponse.getMeta().getMedium());
         product.setBrand(productResponse.getMeta().getBrand());

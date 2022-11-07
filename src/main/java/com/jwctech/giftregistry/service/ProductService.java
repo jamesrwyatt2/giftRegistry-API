@@ -8,4 +8,6 @@ public interface ProductService {
 
     ProductPayload updateProduct(Long id, ProductPayload productPayload);
 
+    void deleteProduct(Long id);
+
 }

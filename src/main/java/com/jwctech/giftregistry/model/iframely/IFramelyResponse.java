@@ -13,4 +13,7 @@ public class IFramelyResponse {
         public ArrayList<String> rel;
         public String html;
 
+        public String status;
+        public String error;
+
 }

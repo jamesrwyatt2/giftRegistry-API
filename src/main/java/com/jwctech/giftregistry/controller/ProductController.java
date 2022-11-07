@@ -18,16 +18,19 @@ public class ProductController {
         this.productService = productService;
     }
 
-    @GetMapping("/test")
-    public ResponseEntity testService(){return ResponseEntity.ok("All good!");}
-
     @PostMapping
     @RequestMapping("/registry/{id}/product")
     public ResponseEntity createProduct(@PathVariable Long id, @RequestBody HashMap<String,String> url){
         System.out.println(url.get("url"));
         return ResponseEntity.ok(productService.createProduct(id, url.get("url")));
     }
+    @DeleteMapping("/registry/{registryId}/product/{productId}")
+    public ResponseEntity deleteProduct(@PathVariable Long registryId, @PathVariable Long productId){
+        productService.deleteProduct(productId);
+        return  ResponseEntity.ok("Successful!");
+    }
 
+    //// Not In use ////
 
 
     // Get all Products for a Registry - Not in uses
@@ -35,21 +38,14 @@ public class ProductController {
     public ResponseEntity getProductsForRegistry(){
         return null;
     }
-    //Update individual Product
+    //Get individual Product
     @GetMapping("/registry/{registryId}/product/{productId}")
-    public ResponseEntity getProductById(@PathVariable Long id, @RequestBody ProductPayload uiProduct){
-
-
-        return null;
+    public ResponseEntity getProductById(@PathVariable Long id, @RequestBody ProductPayload uiProduct){return null;
     }
     //Update Product
     @PutMapping("/registry/{registryId}/product/{productId}")
     public ResponseEntity updateProduct(){
         return null;
     }
-    //Delete Product
-    @DeleteMapping("/registry/{registryId}/product/{productId}")
-    public ResponseEntity deleteProduct(){
-        return null;
-    }
+
 }

@@ -12,5 +12,6 @@ public class ProductPayload {
     private String description;
     private String image;
     private String icon;
+    private String html;
 
 }
