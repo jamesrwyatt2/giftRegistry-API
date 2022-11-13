@@ -24,14 +24,12 @@ public class RegistryServiceImpl implements RegistryService {
 
     @Override
     public RegistryPayload createRegistry(Registry registry) {
-
         return mapToPayload(registryRepo.save(registry));
     }
 
     @Override
     public RegistryPayload findRegistry(Long id) {
          Registry found = findById(id);
-         System.out.println("Found Registry: " +found);
          return mapToPayload(found);
     }
 
@@ -57,7 +55,6 @@ public class RegistryServiceImpl implements RegistryService {
     @Override
     public boolean deleteRegistry(Long id) {
         Registry found = findById(id);
-//        System.out.println("In delete: "+ found);
         registryRepo.deleteById(found.getId());
         return true;
     }

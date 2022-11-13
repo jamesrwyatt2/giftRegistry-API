@@ -37,6 +37,7 @@ public class RegistryController {
     // Put Mapping for Update Registry by Id
     @PutMapping("/{id}")
     public ResponseEntity<?> updateRegistry(@PathVariable(name = "id")Long id, @RequestBody Registry uiReg) {
+        System.out.println("Update Registry: "+uiReg.toString());
         return new ResponseEntity<>((registryService.updateRegistry(id, uiReg)), HttpStatus.OK);
     }
     // Delete Mapping for Delete Registry by Id

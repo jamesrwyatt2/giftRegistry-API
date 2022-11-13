@@ -21,7 +21,6 @@ public class ProductController {
     @PostMapping
     @RequestMapping("/registry/{id}/product")
     public ResponseEntity createProduct(@PathVariable Long id, @RequestBody HashMap<String,String> url){
-        System.out.println(url.get("url"));
         return ResponseEntity.ok(productService.createProduct(id, url.get("url")));
     }
     @DeleteMapping("/registry/{registryId}/product/{productId}")
